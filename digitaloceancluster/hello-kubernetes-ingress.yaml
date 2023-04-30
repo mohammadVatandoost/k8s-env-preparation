@@ -4,19 +4,15 @@ metadata:
   name: hello-kubernetes-ingress
   annotations:
     kubernetes.io/ingress.class: nginx
+    cert-manager.io/cluster-issuer: "letsencrypt-staging"
 spec:
+  tls:
+  - hosts:
+    - mvatandoost.com
+    - test.mvatandoost.com
+    secretName: echo-tls
   rules:
-  - host: "hw1.mvatandoost.com"
-    http:
-      paths:
-      - pathType: Prefix
-        path: "/"
-        backend:
-          service:
-            name: hello-kubernetes-first
-            port:
-              number: 80
-  - host: "hw2.mvatandoost.com"
+  - host: "mvatandoost.com"
     http:
       paths:
       - pathType: Prefix
@@ -24,5 +20,15 @@ spec:
         backend:
           service:
             name: hello-kubernetes-second
+            port:
+              number: 80
+  - host: "test.mvatandoost.com"
+    http:
+      paths:
+      - pathType: Prefix
+        path: "/"
+        backend:
+          service:
+            name: hello-kubernetes-first
             port:
               number: 80

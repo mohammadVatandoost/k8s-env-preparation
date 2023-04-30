@@ -12,5 +12,5 @@ kubectl apply -f ingress-nginx.yaml
 
 ## Sources:
 
-<!-- - [thanos prometheus sample project](https://github.com/AvnerZini/thanos_prometheus_project) -->
+- [ingress with cermaanger](https://www.digitalocean.com/community/tutorials/how-to-set-up-an-nginx-ingress-with-cert-manager-on-digitalocean-kubernetes)
 
