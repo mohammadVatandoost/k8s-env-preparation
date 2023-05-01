@@ -7,7 +7,7 @@
 kubectl create -f kube-logging.yaml
 ```
 
-Install elasticsearch
+Install elasticsearch, we’ve set up our headless service and a stable .elasticsearch.kube-logging.svc.cluster.local domain for our Pods
 ```sh
 kubectl create -f elasticsearch_svc.yaml
 kubectl create -f elasticsearch_statefulset.yaml
@@ -39,6 +39,10 @@ Create fluentd deamonset
 kubectl create -f fluentd.yaml
 ```
 
+Testing Container Logging
+```sh
+kubectl create -f counter.yaml
+```
 
 ---
 
