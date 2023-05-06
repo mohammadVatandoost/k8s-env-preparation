@@ -1,24 +1,30 @@
-# Monitoring
+# Monitoring stack with Opearator
 
 This is moniroting stack for k8s applications.
 
-### Step 1: Set up env
 
-Create a monitoring namespace
 
-```sh
-kubectl create namespace monitoring
-```
+### Step 1: Install Opearator
 
-create an RBAC policy
+Install prometheus-opeartor
 
 ```sh
-kubectl create -f clusterRole.yaml
+LATEST=$(curl -s https://api.github.com/repos/prometheus-operator/prometheus-operator/releases/latest | jq -cr .tag_name)
+curl -sL https://github.com/prometheus-operator/prometheus-operator/releases/download/${LATEST}/bundle.yaml | kubectl create -f -
 ```
+
+You can check for completion with the following command
+
+```sh
+kubectl wait --for=condition=Ready pods -l  app.kubernetes.io/name=prometheus-operator -n default
+```
+
+### Step 2: Create ClusterRole for Prometheus
 
 Create a storage class to enable Prometheus to persist date:
 ```sh
-kubectl apply -f prometheus-storage-class.yaml -n monitoring
+kubectl create -f prometheus-cluster-role.yaml
+kubectl create -f prometheus-cluster-role-binding.yaml
 ```
 
 Add Helm Repo:
@@ -44,12 +50,10 @@ helm install kube-prometheus -f values.yaml bitnami/kube-prometheus -n monitorin
 helm upgrade kube-prometheus -f values.yaml bitnami/kube-prometheus -n monitoring
 ```
 
-Watch the Prometheus Operator Deployment status using the command:
-```sh
-kubectl get deploy -w --namespace monitoring -l app.kubernetes.io/name=kube-prometheus-operator,app.kubernetes.io/instance=kube-prometheus
-kubectl get sts -w --namespace monitoring -l app.kubernetes.io/name=kube-prometheus-prometheus,app.kubernetes.io/instance=kube-prometheus
-kubectl port-forward --namespace monitoring svc/kube-prometheus-prometheus 9090:9090
-```
+<!-- ```sh
+kubectl create  -f prometheus-deployment.yaml 
+
+``` -->
 
 ### Step 3: Configure Thanos on the main observability cluster. If you have one cluster, put it in the same cluster
 
@@ -68,12 +72,6 @@ kubectl -n thanos create secret generic thanos-objectstorage --from-file=thanos.
 ```
 
 Install Thanos manifests:
-```sh
-kubectl apply -f manifests -n thanos
-```
-### Step 4: Install Grafana
-
-Install PVC:
 ```sh
 kubectl apply -f manifests -n thanos
 ```

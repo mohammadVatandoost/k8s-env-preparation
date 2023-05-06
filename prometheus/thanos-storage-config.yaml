@@ -1,6 +1,6 @@
 type: s3
 config:
-  bucket: thanos-store #S3 bucket name
-  endpoint: s3.<region>.amazonaws.com #S3 Regional endpoint
-  access_key: <aws-account-id>
-  secret_key: <aws-account-secret>
+  bucket: my-thanos-store #S3 bucket name
+  endpoint: s3.eu-north-1.amazonaws.com #S3 Regional endpoint
+  access_key: <access_key>
+  secret_key: <secret_key>

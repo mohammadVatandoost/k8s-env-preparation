@@ -18,6 +18,12 @@ Port forward
 ```sh
 kubectl port-forward --namespace loki service/loki-grafana 3000:80
 ```
+
+Install Ingress
+```sh
+kubectl apply -f ingress.yaml --namespace loki 
+```
+
 ---
 
 ## Sources:

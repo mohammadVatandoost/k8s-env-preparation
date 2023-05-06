@@ -5,11 +5,11 @@ metadata:
     app.kubernetes.io/component: query-layer
     app.kubernetes.io/instance: thanos-query
     app.kubernetes.io/name: thanos-query
-    app.kubernetes.io/version: v0.29.0
+    app.kubernetes.io/version: v0.24.0
   name: thanos-query
   namespace: thanos
 spec:
-  replicas: 1
+  replicas: 3
   selector:
     matchLabels:
       app.kubernetes.io/component: query-layer
@@ -21,7 +21,7 @@ spec:
         app.kubernetes.io/component: query-layer
         app.kubernetes.io/instance: thanos-query
         app.kubernetes.io/name: thanos-query
-        app.kubernetes.io/version: v0.29.0
+        app.kubernetes.io/version: v0.24.0
     spec:
       affinity:
         podAntiAffinity:
@@ -46,15 +46,16 @@ spec:
         - --log.format=logfmt
         - --query.replica-label=prometheus_replica
         - --query.replica-label=rule_replica
-        - --endpoint=dnssrv+_grpc._tcp.thanos-store.thanos.svc.cluster.local:10901
-        - --endpoint=dnssrv+_grpc._tcp.thanos-receive-ingestor-default.thanos.svc.cluster.local:10901
+        - --store=dnssrv+_grpc._tcp.thanos-store.thanos.svc.cluster.local:10901
+        - --store=dnssrv+_grpc._tcp.thanos-receive-ingestor-default.thanos.svc.cluster.local:10901
+        - --store=dnssrv+_grpc._tcp.thanos-prometheus-<cluster_name>.<domain_name>:10901
         - --query.auto-downsampling
         env:
         - name: HOST_IP_ADDRESS
           valueFrom:
             fieldRef:
               fieldPath: status.hostIP
-        image: quay.io/thanos/thanos:v0.29.0
+        image: quay.io/thanos/thanos:v0.24.0
         imagePullPolicy: IfNotPresent
         livenessProbe:
           failureThreshold: 4

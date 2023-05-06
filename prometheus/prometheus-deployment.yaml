@@ -33,8 +33,17 @@ spec:
           configMap:
             defaultMode: 420
             name: prometheus-server-conf
-  
         - name: prometheus-storage-volume
           emptyDir: {}
 
-          
+  #  volumeClaimTemplates:
+  # - metadata:
+  #     name: data
+  #     labels:
+  #       app: elasticsearch
+  #   spec:
+  #     accessModes: [ "ReadWriteOnce" ]
+  #     storageClassName: do-block-storage
+  #     resources:
+  #       requests:
+  #         storage: 30Gi         

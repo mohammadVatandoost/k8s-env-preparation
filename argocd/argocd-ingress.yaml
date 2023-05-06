@@ -4,8 +4,15 @@ metadata:
   name: argocd-ingress
   namespace: argocd
   annotations:
-    kubernetes.io/ingress.class: nginx
+    kubernetes.io/ingress.class: "nginx"
+    cert-manager.io/cluster-issuer: "letsencrypt-prod"
+    nginx.ingress.kubernetes.io/ssl-passthrough: "true"
+    nginx.ingress.kubernetes.io/backend-protocol: "HTTPS"
 spec:
+  tls:
+  - hosts:
+    - argocd.mvatandoost.com
+    secretName: argocd-tls
   rules:
   - host: "argocd.mvatandoost.com"
     http:
@@ -16,5 +23,17 @@ spec:
           service:
             name: argocd-server
             port:
-              number: 443
+              name: https
               
+
+
+#  apiVersion: getambassador.io/v2
+# kind: Mapping
+# metadata:
+#  name: guestbook-ui
+#  namespace: default
+# spec:
+#  prefix: /guestbook/
+#  rewrite: /
+#  service: guestbook-ui:80
+# ‘ | kubectl apply -f              
