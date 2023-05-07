@@ -71,11 +71,12 @@ Install Thanos manifests:
 ```sh
 kubectl apply -f manifests -n thanos
 ```
-### Step 4: Install Grafana
+### Step 4: Install Thanos compactor
 
 Install PVC:
 ```sh
-kubectl apply -f manifests -n thanos
+kubectl apply -f thanos-compact-serviceAccount.yaml -n thanos
+kubectl apply -f thanos-compact-statefulSet.yaml -n thanos
 ```
 
 ---
