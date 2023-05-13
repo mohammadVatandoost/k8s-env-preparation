@@ -50,10 +50,7 @@ helm install kube-prometheus -f values.yaml bitnami/kube-prometheus -n monitorin
 helm upgrade kube-prometheus -f values.yaml bitnami/kube-prometheus -n monitoring
 ```
 
-<!-- ```sh
-kubectl create  -f prometheus-deployment.yaml 
 
-``` -->
 
 ### Step 3: Configure Thanos on the main observability cluster. If you have one cluster, put it in the same cluster
 
