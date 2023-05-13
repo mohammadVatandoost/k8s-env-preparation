@@ -414,14 +414,14 @@ operator:
   ##
   logFormat: logfmt
   ## @param operator.configReloaderResources Set the prometheus config reloader side-car CPU and memory requests and limits.
-  ## configReloaderResources:
-  ##   limits:
-  ##     cpu: 200m
-  ##     memory: 100Mi
-  ##   requests:
-  ##     cpu: 100m
-  ##     memory: 50Mi
-  ##
+  # configReloaderResources:
+  #   limits:
+  #     cpu: 256m
+  #     memory: 100Mi
+  #   requests:
+  #     cpu: 100m
+  #     memory: 50Mi
+  
   configReloaderResources: {}
   ## @param operator.kubeletService.enabled If true, the operator will create and maintain a service for scraping kubelets
   ## @param operator.kubeletService.namespace Namespace to deploy the kubelet service
@@ -771,6 +771,13 @@ prometheus:
   ## ref: https://kubernetes.io/docs/user-guide/compute-resources/
   ##
   resources: {}
+  # resources:
+  #   limits:
+  #     cpu: 512m
+  #     memory: 256Mi
+  #   requests:
+  #     cpu: 200m
+  #     memory: 256Mi
   ## @param prometheus.podAffinityPreset Prometheus Pod affinity preset. Ignored if `affinity` is set. Allowed values: `soft` or `hard`
   ## ref: https://kubernetes.io/docs/concepts/scheduling-eviction/assign-pod-node/#inter-pod-affinity-and-anti-affinity
   ##
@@ -1233,13 +1240,13 @@ prometheus:
     ## @param prometheus.thanos.resources.limits The resources limits for the Thanos sidecar container
     ## @param prometheus.thanos.resources.requests The resources requests for the Thanos sidecar container
     ##
-    resources:
-      requests:
-        cpu: 512m
-        memory: 1024Mi
-      limits:
-        cpu: 512m
-        memory: 1024Mi 
+    # resources:
+    #   requests:
+    #     cpu: 512m
+    #     memory: 512Mi
+    #   limits:
+    #     cpu: 512m
+    #     memory: 512Mi 
     ## Configure extra options for liveness probe
     ## ref: https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-probes/#configure-probes
     ## @param prometheus.thanos.livenessProbe.enabled Turn on and off liveness probe

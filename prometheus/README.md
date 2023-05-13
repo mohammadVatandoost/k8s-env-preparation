@@ -40,8 +40,8 @@ kubectl -n monitoring create secret generic thanos-objstore-config --from-file=t
 install/upgrade the helm chart with our relevant customizations.
 
 ```sh
-helm install kube-prometheus -f values.yaml bitnami/kube-prometheus -n monitoring
-helm upgrade kube-prometheus -f values.yaml bitnami/kube-prometheus -n monitoring
+helm install kube-prometheus -f kube-prometheus-values.yaml bitnami/kube-prometheus -n monitoring
+helm upgrade kube-prometheus -f kube-prometheus-values.yaml bitnami/kube-prometheus -n monitoring
 ```
 
 Watch the Prometheus Operator Deployment status using the command:
